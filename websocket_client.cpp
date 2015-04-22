@@ -26,6 +26,10 @@ namespace connectserver{
 		m_client.set_open_handler(bind(&type::on_open,this,::_1));
 		m_client.set_message_handler(bind(&type::on_message,this,::_1));
 		m_client.set_close_handler(bind(&type::on_close,this,::_1));
+		
+		//Set client status value
+		is_connect = false;
+		m_status = "none";
 	}
 
 	void websocket_client::connect(){
@@ -37,10 +41,11 @@ namespace connectserver{
 		}
 		m_client.connect(con);
 		m_status = "connect";
+		is_connect = true;
 	}
 
 	void websocket_client::start(){
-		if(m_status != "connect"){
+		if(!is_connect){
 			this.connect();
 		}
 		m_client.run();
