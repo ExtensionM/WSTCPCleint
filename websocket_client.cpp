@@ -32,7 +32,6 @@ namespace connectserver{
 		m_client.set_close_handler(bind(&type::on_close,this,::_1));
 		
 		//m_hdl is null in first
-		m_hdl = nullptr;
 
 		//Set client status value
 		m_status = "none";
@@ -75,7 +74,7 @@ namespace connectserver{
 	}
 
 	void websocket_client::send(std::string message){
-		if(m_hdl != nullptr){
+		if(m_is_connect){
 			try{
 				m_client.send(m_hdl,message,websocketpp::frame::opcode::text);
 			} catch (const websocketpp::lib::error_code& e){
