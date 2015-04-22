@@ -36,7 +36,8 @@ class websocket_client {
 		const std::string get_message();
 	private:
 		client m_client;
-		
+		websocket_client::connection_hdl m_hdl;
+
 		std::string m_status;
 		std::string m_url;
 		std::string m_msg;
