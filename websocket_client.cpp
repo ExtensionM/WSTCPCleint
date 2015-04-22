@@ -65,6 +65,7 @@ namespace connectserver{
 	}
 
 	void websocket_client::on_close(websocketpp::connection_hdl hdl){
+		m_status = "close";
 	}
 
 	void websocket_client::send(std::string message){
