@@ -59,7 +59,6 @@ namespace connectserver{
 		if(!m_is_connect){
 			connect();
 		}
-		send("Start");
 		m_client.run();
 	}
 
@@ -70,6 +69,7 @@ namespace connectserver{
 	void websocket_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
 		m_msg = msg->get_payload();
 		std::cout << m_msg << std::endl;
+		send("Start");
 	}
 
 	void websocket_client::on_close(websocketpp::connection_hdl hdl){
