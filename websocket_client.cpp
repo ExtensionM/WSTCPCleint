@@ -5,6 +5,7 @@
 #include <websocketpp/client.hpp>
 
 #include <string>
+#include <iostream>
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
 
@@ -68,6 +69,7 @@ namespace connectserver{
 
 	void websocket_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
 		m_msg = msg->get_payload();
+		std::cout << m_msg << std::endl;
 	}
 
 	void websocket_client::on_close(websocketpp::connection_hdl hdl){
