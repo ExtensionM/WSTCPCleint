@@ -6,9 +6,13 @@
 
 #include <stirng>
 
+typedef websocketpp::client<websocketpp::config::asio_client> client;
+
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
 using websocketppp::lib::bind;
+
+typedef websocketpp::config::asio_tls_client::message_type::ptr message_ptr;
 
 namespace connectserver{
 
@@ -54,7 +58,8 @@ namespace connectserver{
 	void websocket_client::on_open(websocketpp::connection_hdl hdl){
 	}
 
-	void websocket_client::on_message(websocketpp::connection_hdl hdl){
+	void websocket_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
+		m_msg = msg->get_payload();
 	}
 
 	void websocket_client::on_close(websocketpp::connection_hdl hdl){

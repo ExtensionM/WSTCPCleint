@@ -9,6 +9,13 @@
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
 
+using websocketpp::lib::placeholders::_1;
+using websocketpp::lib::placeholders::_2;
+using websocketppp::lib::bind;
+
+typedef websocketpp::config::asio_tls_client::message_type::ptr message_ptr;
+
+
 namespace connectserver {
 
 class websocket_client {
@@ -20,7 +27,7 @@ class websocket_client {
 		void start();
 
 		void on_open(websocketpp::connection_hdl hdl);
-		void on_message(websocketpp::connection_hdl hdl);
+		void on_message(websocketpp::connection_hdl hdl,message_ptr msg);
 		void on_close(websocketpp::connection_hdl hdl);
 		
 		void send(std::string meesage);
