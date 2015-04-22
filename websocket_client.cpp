@@ -40,6 +40,9 @@ namespace connectserver{
 	}
 
 	void websocket_client::start(){
+		if(m_status != "connect"){
+			this.connect();
+		}
 		m_client.run();
 	}
 
