@@ -38,7 +38,9 @@ class websocket_client {
 		
 		std::string m_status;
 		std::string m_url;
-		bool is_connect;
+		std::string m_msg;
+
+		bool m_is_connect;
 };
 
 } //namespace connectserver

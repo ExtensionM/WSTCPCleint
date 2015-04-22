@@ -32,8 +32,9 @@ namespace connectserver{
 		m_client.set_close_handler(bind(&type::on_close,this,::_1));
 		
 		//Set client status value
-		is_connect = false;
 		m_status = "none";
+		m_msg = "";
+		is_connect = false;
 	}
 
 	void websocket_client::connect(){
@@ -56,6 +57,7 @@ namespace connectserver{
 	}
 
 	void websocket_client::on_open(websocketpp::connection_hdl hdl){
+		m_status = "open";
 	}
 
 	void websocket_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
