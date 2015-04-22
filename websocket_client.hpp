@@ -12,6 +12,8 @@ typedef websocketpp::client<websocketpp::config::asio_client> client;
 namespace connectserver {
 
 class websocket_client {
+	typedef websocket_client type;
+	
 	public:
 		websocket_client(std::string uri);
 		void connect();
