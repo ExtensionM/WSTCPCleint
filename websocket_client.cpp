@@ -1,16 +1,16 @@
 #include "websocket_client.hpp"
 
-#include <websocket/config/asio_client.hpp>
+#include <websocketpp/config/asio_client.hpp>
 
-#include <websocket/client.hpp>
+#include <websocketpp/client.hpp>
 
-#include <stirng>
+#include <string>
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
 
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
-using websocketppp::lib::bind;
+using websocketpp::lib::bind;
 
 typedef websocketpp::config::asio_tls_client::message_type::ptr message_ptr;
 
@@ -28,7 +28,7 @@ namespace connectserver{
 		
 		//Register our Handler
 		m_client.set_open_handler(bind(&type::on_open,this,::_1));
-		m_client.set_message_handler(bind(&type::on_message,this,::_1));
+		m_client.set_message_handler(bind(&type::on_message,this,::_1,::_2));
 		m_client.set_close_handler(bind(&type::on_close,this,::_1));
 		
 		//m_hdl is null in first
@@ -37,11 +37,11 @@ namespace connectserver{
 		//Set client status value
 		m_status = "none";
 		m_msg = "";
-		is_connect = false;
+		m_is_connect = false;
 	}
 
 	void websocket_client::connect(){
-		websocket_client::lib::error_code error_code;
+		websocketpp::lib::error_code error_code;
 		client::connection_ptr con = m_client.get_connection(m_url, error_code);
 
 		if(error_code){
@@ -52,12 +52,12 @@ namespace connectserver{
 
 		m_client.connect(con);
 		m_status = "connect";
-		is_connect = true;
+		m_is_connect = true;
 	}
 
 	void websocket_client::start(){
-		if(!is_connect){
-			this.connect();
+		if(!m_is_connect){
+			connect();
 		}
 		m_client.run();
 	}
@@ -78,7 +78,7 @@ namespace connectserver{
 		if(m_hdl != nullptr){
 			try{
 				m_client.send(m_hdl,message,websocketpp::frame::opcode::text);
-			} catch (const websocket_client::lib::error_code& e){
+			} catch (const websocketpp::lib::error_code& e){
 				//とりあえず握りつぶしておけ 
 			} catch (...){
 				//とりあえず同じように握りつぶしておけ

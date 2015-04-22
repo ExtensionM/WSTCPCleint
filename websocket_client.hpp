@@ -1,17 +1,17 @@
 #ifndef WSCLIENT_WEBSOCKET_CLIENT_HPP
 #define WSCLIENT_WEBSOCKET_CLIENT_HPP
 
-#include <websocket/config/asio_client.hpp>
+#include <websocketpp/config/asio_client.hpp>
 
-#include <websocket/client.hpp>
+#include <websocketpp/client.hpp>
 
-#include <stirng>
+#include <string>
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
 
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
-using websocketppp::lib::bind;
+using websocketpp::lib::bind;
 
 typedef websocketpp::config::asio_tls_client::message_type::ptr message_ptr;
 
@@ -36,7 +36,7 @@ class websocket_client {
 		const std::string get_message();
 	private:
 		client m_client;
-		websocket_client::connection_hdl m_hdl;
+		websocketpp::connection_hdl m_hdl;
 
 		std::string m_status;
 		std::string m_url;
