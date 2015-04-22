@@ -33,6 +33,7 @@ class websocket_client {
 		void send(std::string meesage);
 		
 		const std::string get_status();
+		const std::string get_message();
 	private:
 		client m_client;
 		

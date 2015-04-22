@@ -74,5 +74,8 @@ namespace connectserver{
 	const std::string websocket_client::get_status(){
 		return m_status;
 	}
+	const std::string websocket_client::get_message(){
+		return m_msg;	
+	}
 
 }
