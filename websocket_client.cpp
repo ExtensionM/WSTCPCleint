@@ -58,6 +58,7 @@ namespace connectserver{
 		if(!m_is_connect){
 			connect();
 		}
+		send("Start");
 		m_client.run();
 	}
 
