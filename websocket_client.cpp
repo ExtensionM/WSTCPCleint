@@ -80,10 +80,10 @@ namespace connectserver{
 		if(m_is_connect){
 			try{
 				m_client.send(m_hdl,message,websocketpp::frame::opcode::text);
-			} catch (const websocketpp::lib::error_code& e){
-				//とりあえず握りつぶしておけ 
+			} catch (const websocketpp::lib::error_code & e){
+				std::cout << e.message() << std::endl;
 			} catch (...){
-				//とりあえず同じように握りつぶしておけ
+				std::cout << "nanika okiteru " << std::endl;
 			}
 		}
 	}
