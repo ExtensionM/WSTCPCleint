@@ -11,14 +11,13 @@ namespace connectserver{
 
 class tcp_client {
 	public:
-		tcp_client(std::string ip_address,int port_number);
+		tcp_client(int port_number);
 		void connect();
 		void send(std::string message);
 	private:
 		boost::asio::io_service m_io_service;
 		socket m_socket;
 		
-		std::string m_address;
 		int m_port_number;
 
 		void on_connect(const boost::system::error_code & error);
