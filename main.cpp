@@ -1,4 +1,4 @@
-#include "src/websocket_client.hpp"
+#include "src/tcp_client.hpp"
 
 #include <iostream>
 #include <string>
@@ -6,10 +6,10 @@
 using namespace connectserver;
 
 int main(int argc,char **argv){
-	std::string url = "ws://ec2-52-68-77-61.ap-northeast-1.compute.amazonaws.com:3000";
-	websocket_client *ws = new websocket_client(url);
-	ws->connect();
-	ws->start();
-	delete ws;
+	int port = 8080;
+	tcp_client *tclient = new tcp_client(port);
+	tclient->connect();
+	tclient->send("test");
+	delete tclient;
 }
 
