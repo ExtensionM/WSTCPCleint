@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-typedef boost::asio::ip::tcp::socket sockect;
+namespace ip =  boost::asio::ip;
 
 namespace connectserver{
 
@@ -16,7 +16,7 @@ namespace connectserver{
 			void send(std::string message);
 		private:
 			boost::asio::io_service m_io_service;
-			socket m_socket;
+			ip::tcp::socket * m_socket;
 
 			int m_port_number;
 			bool m_is_connect;
