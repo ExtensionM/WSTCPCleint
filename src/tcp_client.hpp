@@ -19,6 +19,7 @@ class tcp_client {
 		socket m_socket;
 		
 		int m_port_number;
+		bool m_is_connect;
 
 		void on_connect(const boost::system::error_code & error);
 		void on_send(const boost::system::error_code& error,size_t bytes_transferred);
