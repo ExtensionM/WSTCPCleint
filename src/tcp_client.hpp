@@ -14,6 +14,8 @@ namespace connectserver{
 			tcp_client(int port_number);
 			void connect();
 			void send(std::string message);
+		protected:
+			void on_send(const boost::system::error_code& error,size_t bytes_transferred);
 		private:
 			boost::asio::io_service m_io_service;
 			ip::tcp::socket * m_socket;
@@ -21,7 +23,6 @@ namespace connectserver{
 			int m_port_number;
 			bool m_is_connect;
 
-			void on_send(const boost::system::error_code& error,size_t bytes_transferred);
 
 	};
 

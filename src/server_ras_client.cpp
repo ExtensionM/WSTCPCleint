@@ -1,4 +1,5 @@
-#include "websocket_client.hpp"
+#include "server_ras_client.hpp"
+#include "tcp_client.hpp"
 
 #include <websocketpp/config/asio_client.hpp>
 
@@ -17,7 +18,7 @@ typedef websocketpp::config::asio_tls_client::message_type::ptr message_ptr;
 
 namespace connectserver{
 
-	websocket_client::websocket_client(std::string uri){
+	server_ras_client::server_ras_client(std::string uri){
 		// set url
 		m_url = uri;
 
@@ -38,9 +39,11 @@ namespace connectserver{
 		m_status = "none";
 		m_msg = "";
 		m_is_connect = false;
+		m_tcp_client = new tcp_client(8080);
 	}
 
-	void websocket_client::connect(){
+	void server_ras_client::connect(){
+		m_tcp_client->connect();
 		websocketpp::lib::error_code error_code;
 		client::connection_ptr con = m_client.get_connection(m_url, error_code);
 
@@ -55,28 +58,29 @@ namespace connectserver{
 		m_is_connect = true;
 	}
 
-	void websocket_client::start(){
+	void server_ras_client::start(){
 		if(!m_is_connect){
 			connect();
 		}
 		m_client.run();
 	}
 
-	void websocket_client::on_open(websocketpp::connection_hdl hdl){
+	void server_ras_client::on_open(websocketpp::connection_hdl hdl){
 		m_status = "open";
 		send("user:raswli");
 	}
 
-	void websocket_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
+	void server_ras_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
 		m_msg = msg->get_payload();
-		std::cout << m_msg << std::endl;
+		std::cout << "message: " << m_msg << std::endl;
+		m_tcp_client->send(m_msg + "\n");
 	}
 
-	void websocket_client::on_close(websocketpp::connection_hdl hdl){
+	void server_ras_client::on_close(websocketpp::connection_hdl hdl){
 		m_status = "close";
 	}
 
-	void websocket_client::send(std::string message){
+	void server_ras_client::send(std::string message){
 		if(m_is_connect){
 			try{
 				m_client.send(m_hdl,message,websocketpp::frame::opcode::text);
@@ -88,10 +92,10 @@ namespace connectserver{
 		}
 	}
 
-	const std::string websocket_client::get_status(){
+	const std::string server_ras_client::get_status(){
 		return m_status;
 	}
-	const std::string websocket_client::get_message(){
+	const std::string server_ras_client::get_message(){
 		return m_msg;	
 	}
 

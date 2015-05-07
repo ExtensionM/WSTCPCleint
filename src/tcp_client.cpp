@@ -23,6 +23,7 @@ namespace connectserver{
 			return;
 		}
 		m_is_connect = true;
+
 	}
 	
 	void tcp_client::send(std::string message){

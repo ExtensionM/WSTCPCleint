@@ -25,15 +25,16 @@ class websocket_client {
 		websocket_client(std::string uri);
 		void connect();
 		void start();
+		void send(std::string meesage);
 
+		const std::string get_status();
+		const std::string get_message();
+
+	protected:
 		void on_open(websocketpp::connection_hdl hdl);
 		void on_message(websocketpp::connection_hdl hdl,message_ptr msg);
 		void on_close(websocketpp::connection_hdl hdl);
 		
-		void send(std::string meesage);
-		
-		const std::string get_status();
-		const std::string get_message();
 	private:
 		client m_client;
 		websocketpp::connection_hdl m_hdl;
