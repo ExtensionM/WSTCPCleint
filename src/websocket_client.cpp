@@ -64,12 +64,12 @@ namespace connectserver{
 
 	void websocket_client::on_open(websocketpp::connection_hdl hdl){
 		m_status = "open";
+		send("user:raswli");
 	}
 
 	void websocket_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
 		m_msg = msg->get_payload();
 		std::cout << m_msg << std::endl;
-		send("Start");
 	}
 
 	void websocket_client::on_close(websocketpp::connection_hdl hdl){

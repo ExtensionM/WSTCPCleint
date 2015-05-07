@@ -25,9 +25,8 @@ class websocket_client {
 		websocket_client(std::string uri);
 		void connect();
 		void start();
-
 		void send(std::string meesage);
-		
+
 		const std::string get_status();
 		const std::string get_message();
 
