@@ -47,6 +47,8 @@ namespace connectserver {
 			std::string m_msg;
 
 			bool m_is_connect;
+
+			std::string generate_json();
 	};
 
 } //namespace connectserver
