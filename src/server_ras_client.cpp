@@ -5,8 +5,12 @@
 
 #include <websocketpp/client.hpp>
 
+#include "../Jzon/Jzon.h"
+
 #include <string>
 #include <iostream>
+#include <fstream>
+
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
 
@@ -27,12 +31,12 @@ namespace connectserver{
 
 		//Initialize ASIO
 		m_client.init_asio();
-		
+
 		//Register our Handler
 		m_client.set_open_handler(bind(&type::on_open,this,::_1));
 		m_client.set_message_handler(bind(&type::on_message,this,::_1,::_2));
 		m_client.set_close_handler(bind(&type::on_close,this,::_1));
-		
+
 		//m_hdl is null in first
 
 		//Set client status value
@@ -90,6 +94,10 @@ namespace connectserver{
 				std::cout << "nanika okiteru " << std::endl;
 			}
 		}
+	}
+
+	std::string generate_json(){
+
 	}
 
 	const std::string server_ras_client::get_status(){
