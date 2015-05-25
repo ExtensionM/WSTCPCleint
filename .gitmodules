@@ -1,3 +1,6 @@
 [submodule "Jzon"]
 	path = Jzon
 	url = https://github.com/Zguy/Jzon
+[submodule "websocketpp"]
+	path = websocketpp
+	url = https://github.com/zaphoyd/websocketpp.git
