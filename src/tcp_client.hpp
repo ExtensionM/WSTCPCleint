@@ -23,7 +23,6 @@ namespace connectserver{
 			int m_port_number;
 			bool m_is_connect;
 
-
 	};
 
 }

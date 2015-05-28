@@ -14,7 +14,7 @@ namespace connectserver{
 		m_socket = new ip::tcp::socket(m_io_service);
 		m_is_connect = false;
 	}
-	
+
 	void tcp_client::connect(){
 		boost::system::error_code error;
 		m_socket->connect(ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"),m_port_number),error);
@@ -25,13 +25,13 @@ namespace connectserver{
 		m_is_connect = true;
 
 	}
-	
+
 	void tcp_client::send(std::string message){
 		if(m_is_connect){
 			boost::asio::async_write(*m_socket,boost::asio::buffer(message),
-				boost::bind(&tcp_client::on_send,this,
-				boost::asio::placeholders::error,
-				boost::asio::placeholders::bytes_transferred));
+					boost::bind(&tcp_client::on_send,this,
+						boost::asio::placeholders::error,
+						boost::asio::placeholders::bytes_transferred));
 		}
 	}
 
@@ -43,4 +43,3 @@ namespace connectserver{
 		}
 	}
 }
-
