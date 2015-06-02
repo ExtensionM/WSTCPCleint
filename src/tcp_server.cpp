@@ -18,6 +18,7 @@ namespace connectserver{
 	}
 
 	void raspar_tcp_server::accept(){
+		std::cout << "[TCP] Start Accept" << std::endl;
 		m_acceptor->async_accept(*m_socket,
 				boost::bind(&raspar_tcp_server::on_accept,this,boost::asio::placeholders::error));
 	}
@@ -27,31 +28,28 @@ namespace connectserver{
 			std::cout << "accept failed: " << error.message() << std::endl;
 			return;
 		}
+		std::cout << "[TCP] Server Start" << std::endl;
 		receive();
 	}
 
 	void raspar_tcp_server::receive(){
-		boost::asio::async_read(
-				*m_socket,m_receive_buff,boost::asio::transfer_all(),
-				boost::bind(&raspar_tcp_server::on_receive,this,
-					boost::asio::placeholders::error,boost::asio::placeholders::bytes_transferred));
+			boost::asio::async_read_until(
+					*m_socket,m_receive_buff,'\n',
+					boost::bind(&raspar_tcp_server::on_receive,this,
+						boost::asio::placeholders::error,boost::asio::placeholders::bytes_transferred));
 	}
 
 
 	void raspar_tcp_server::on_receive(const boost::system::error_code& error,size_t bytes_transferred){
-		std::ofstream ofs;
-		ofs.open("~/Build/test.txt");
-		std::cout <<  "message comming " << std::endl;
+		std::cout <<  "[TCP] message comming " << std::endl;
 		if (error && error != boost::asio::error::eof) {
 			std::cout << "receive failed: " << error.message() << std::endl;
 		}
 		else {
 			const char* data = boost::asio::buffer_cast<const char*>(m_receive_buff.data());
-			std::cout << data << std::endl;
-			ofs << data << std::endl;
+			std::cout << "[TCP] Data:" <<  data << std::endl;
 			m_receive_buff.consume(m_receive_buff.size());
 		}
-		ofs.close();
 	}
 }
 
