@@ -9,9 +9,9 @@ namespace ip =  boost::asio::ip;
 
 namespace connectserver{
 
-	class raspar_tcp_client {
+	class raspar_tcp_server {
 		public:
-			raspar_tcp_client(int port_number,boost::asio::io_service& io_service);
+			raspar_tcp_server(int port_number,boost::asio::io_service& io_service);
 			void accept();
 			void receive();
 		protected:
