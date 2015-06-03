@@ -43,7 +43,7 @@ namespace connectserver{
 		m_status = "none";
 		m_msg = "";
 		m_is_connect = false;
-		m_tcp_client = new tcp_client(8080);
+		m_tcp_client = new tcp_client(10000);
 	}
 
 	void server_ras_client::connect(){
@@ -71,7 +71,7 @@ namespace connectserver{
 
 	void server_ras_client::on_open(websocketpp::connection_hdl hdl){
 		m_status = "open";
-		std::ifstream ifs("~/.setting.json");
+		std::ifstream ifs("/home/sh4869/.setting.json");
 		if(ifs.is_open()){
 			std::string str;
 			ifs >> str;
@@ -83,11 +83,12 @@ namespace connectserver{
 
 	void server_ras_client::on_message(websocketpp::connection_hdl hdl,message_ptr msg){
 		m_msg = msg->get_payload();
-		std::cout << "message: " << m_msg << std::endl;
+		std::cout << "[WebSocket] message: " << m_msg << std::endl;
 		m_tcp_client->send(m_msg + "\n");
 	}
 
 	void server_ras_client::on_close(websocketpp::connection_hdl hdl){
+		std::cout << "[WebSocket] Socket Close" << std::endl;
 		m_status = "close";
 	}
 
