@@ -33,10 +33,10 @@ namespace connectserver{
 	}
 
 	void raspar_tcp_server::receive(){
-			boost::asio::async_read_until(
-					*m_socket,m_receive_buff,'\n',
-					boost::bind(&raspar_tcp_server::on_receive,this,
-						boost::asio::placeholders::error,boost::asio::placeholders::bytes_transferred));
+		boost::asio::async_read_until(
+				*m_socket,m_receive_buff,"\n",
+				boost::bind(&raspar_tcp_server::on_receive,this,
+					boost::asio::placeholders::error,boost::asio::placeholders::bytes_transferred));
 	}
 
 
@@ -44,11 +44,16 @@ namespace connectserver{
 		std::cout <<  "[TCP] message comming " << std::endl;
 		if (error && error != boost::asio::error::eof) {
 			std::cout << "receive failed: " << error.message() << std::endl;
-		}
-		else {
+		}else if(error == boost::asio::error::eof){
+			std::cout << "Connection Closed" << std::endl;
+			m_socket->close();
+			accept();
+		}else {
 			const char* data = boost::asio::buffer_cast<const char*>(m_receive_buff.data());
 			std::cout << "[TCP] Data:" <<  data << std::endl;
 			m_receive_buff.consume(m_receive_buff.size());
+			data = "";
+			receive();
 		}
 	}
 }
