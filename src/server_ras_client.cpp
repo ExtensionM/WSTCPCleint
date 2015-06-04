@@ -71,11 +71,15 @@ namespace connectserver{
 
 	void server_ras_client::on_open(websocketpp::connection_hdl hdl){
 		m_status = "open";
-		std::ifstream ifs("/home/sh4869/.setting.json");
+		std::ifstream ifs("/home/pi/.setting.json");
 		if(ifs.is_open()){
 			std::string str;
 			ifs >> str;
-			send(str);
+			if(str != ""){
+				send(str);
+			}else{
+				send("{\"type\":\"regist\",\"name\":\"sh4869\",\"password\":\"raspitest4869\"}");
+			}
 		}else{
 			send("{\"type\":\"regist\",\"name\":\"sh4869\",\"password\":\"raspitest4869\"}");
 		}
